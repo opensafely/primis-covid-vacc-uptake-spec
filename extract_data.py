@@ -3,6 +3,7 @@ import json
 import sys
 from itertools import groupby
 from docx import Document
+from docx.table import Table
 
 doc = Document(sys.argv[1])
 
@@ -33,14 +34,7 @@ for table in doc.tables:
         row = [item for item, _ in groupby(row)]
         rows.append(row)
 
-# with open("tmp.csv", "w") as f:
-#     writer = csv.writer(f)
-#     writer.writerows(rows)
-
-# with open("v1.1.csv") as f:
-#     rows = list(csv.reader(f))
-
-records = []
+extraction_criteria_records = []
 
 last_id = 0
 
@@ -75,8 +69,93 @@ for id, group in groupby(rows, lambda row: row[0]):
             title = title[1:-1]
     record["title"] = title
 
-    records.append(record)
+    extraction_criteria_records.append(record)
 
+
+banding_and_grouping_records = []
+
+last_banding_id = 0
+
+for table in doc.tables:
+    row0 = table.rows[0]
+
+    if row0.cells[0].text.strip() == "1" and row0.cells[1].text.strip() == "Age Bands":
+        inner_table = Table(table._element.xpath(".//w:tbl")[0], table._parent)
+        record = {
+            "banding_id": 1,
+            "banding_name": "Age",
+            "row": [
+                [cell.text.strip() for cell in row.cells] for row in inner_table.rows
+            ],
+        }
+
+        banding_and_grouping_records.append(record)
+        continue
+
+    if row0.cells[0].text.strip() == "":
+        record = {
+            "banding_id": int(table.rows[1].cells[0].text.strip()),
+            "banding_name": row0.cells[1].text.strip(),
+        }
+
+        if record["banding_name"] == "Gender Bands":
+            offset = 1
+        else:
+            offset = 2
+            record["banding_key"] = table.rows[1].cells[1].text.strip()
+
+        record["rows"] = [
+            [cell.text.strip().replace("\n", "") for cell in row.cells[offset:]]
+            for row in table.rows[1:]
+        ]
+
+        banding_and_grouping_records.append(record)
+        continue
+
+    try:
+        banding_id = int(row0.cells[0].text.strip())
+    except ValueError:
+        continue
+
+    if banding_id == 1:
+        continue
+
+    if banding_id == 3:
+        record = {
+            "banding_id": banding_id,
+            "banding_name": row0.cells[1].text.strip(),
+            "rows": [
+                [cell.text.strip().replace("\n", "") for cell in row.cells]
+                for row in table.rows[2:]
+            ],
+        }
+        banding_and_grouping_records.append(record)
+        continue
+
+    if banding_id == 147:
+        continue
+
+    if banding_id < last_banding_id:
+        break
+
+    record = {
+        "banding_id": banding_id,
+        "banding_name": row0.cells[1].text.strip(),
+        "banding_key": table.rows[1].cells[1].text.strip(),
+        "rows": [
+            [cell.text.strip().replace("\n", "") for cell in row.cells[2:]]
+            for row in table.rows[1:]
+        ],
+    }
+    banding_and_grouping_records.append(record)
+
+    last_banding_id = banding_id
+
+
+records = {
+    "extraction_criteria": extraction_criteria_records,
+    "bandings_and_groupings": banding_and_grouping_records,
+}
 
 with open(sys.argv[2], "w") as f:
     json.dump(records, f, indent=2)
