@@ -122,14 +122,14 @@
     {
       "id": 39,
       "name": "BMI_STAGE",
-      "details": "<<6497000 OR <48499001 OR <<35425004 OR 443371000124107 OR 914721000000105 OR 443381000124105 OR 914731000000107 OR 914741000000103 OR 722595002",
+      "details": "<<6497000 OR <48499001 OR <<35425004 OR 443371000124107 OR 914721000000105 OR 443381000124105 OR 914731000000107 OR 914741000000103 OR 722595002 OR 819948005",
       "criteria": "LATEST <= RUN_DAT",
       "title": "All BMI coded terms"
     },
     {
       "id": 41,
       "name": "SEV_OBESITY",
-      "details": "408512008 OR 914741000000103",
+      "details": "408512008 OR 914741000000103 OR 819948005",
       "criteria": "Most recent of BMI_STAGE_DAT",
       "title": "Severe Obesity code recorded"
     },
@@ -227,14 +227,14 @@
     {
       "id": 69,
       "name": "MOD1RX_COD",
-      "details": "dm+d code when available",
+      "details": "39326911000001101",
       "criteria": "Earliest >30/11/2020 and <= RUN_DAT",
       "title": "First Moderna vaccination medication code"
     },
     {
       "id": 71,
       "name": "MOD2RX_COD",
-      "details": "dm+d code when available",
+      "details": "39326911000001101",
       "criteria": "Latest > (moD1RX_DAT + 20 days) AND <= RUN_DAT",
       "title": "Second Moderna vaccination medication code"
     },
@@ -297,14 +297,14 @@
     {
       "id": 89,
       "name": "COVRX1_COD",
-      "details": "39115611000001103 OR 39114911000001105 OR 39230211000001104",
+      "details": "39115611000001103 OR 39114911000001105 OR 39230211000001104 OR 39326911000001101",
       "criteria": "Earliest >30/11/2020 and <= RUN_DAT",
       "title": "First COVID vaccination medication code (any)"
     },
     {
       "id": 91,
       "name": "COVRX2_COD",
-      "details": "39115611000001103 OR 39114911000001105 OR 39230211000001104",
+      "details": "39115611000001103 OR 39114911000001105 OR 39230211000001104 OR 39326911000001101",
       "criteria": "Latest > (COVRX1_DAT + 20 days) and <= RUN_DAT",
       "title": "Second COVID vaccination medication code (any)"
     },
@@ -395,7 +395,7 @@
     {
       "id": 117,
       "name": "ETH2001_MXDOTHER_COD",
-      "details": "92631000000103 OR 92721000000106 OR 186023009 OR <<92451000000107",
+      "details": "92631000000103 OR 92721000000106 OR <<92451000000107",
       "criteria": "Latest<= RUN_DAT",
       "title": "Mixed - Any other mixed background Ethnicity"
     },
@@ -533,11 +533,11 @@
       "row": [
         [
           "Band 1",
-          "PAT_AGE <16 at REF_DAT"
+          "PAT_AGE <16 defined as DATE_OF_BIRTH >=01/04/2005"
         ],
         [
           "Band 2",
-          "PAT_AGE >=16 at RUN_DAT and <30 at REF_DAT*"
+          "PAT_AGE >=16 at REF_DAT and <30 at REF_DAT*"
         ],
         [
           "Band 3",
@@ -585,7 +585,7 @@
         ],
         [
           "Band 14",
-          "PAT_AGE >=16 at RUN_DAT and <40 at REF_DAT*"
+          "PAT_AGE >=16 at REF_DAT and <40 at REF_DAT*"
         ],
         [
           "Band 15",
@@ -593,7 +593,7 @@
         ],
         [
           "Band 16",
-          "PAT_AGE >=16 at RUN_DAT and <50 at REF_DAT*"
+          "PAT_AGE >=16 at REF_DAT and <50 at REF_DAT*"
         ],
         [
           "Band 17",
