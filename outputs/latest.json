@@ -25,14 +25,14 @@
       "id": 10,
       "name": "ASTRXM2_COD",
       "details": "See associated spreadsheet for extensional list of medication codes",
-      "criteria": "ANY <= (RUN_DAT - 30 days) AND >= (RUN_DAT - 60 days)",
+      "criteria": "ANY < (RUN_DAT - 30 days) AND >= (RUN_DAT - 60 days)",
       "title": "Asthma systemic steroid prescription code in month 2"
     },
     {
       "id": 12,
       "name": "ASTRXM3_COD",
       "details": "See associated spreadsheet for extensional list of medication codes",
-      "criteria": "ANY <= (RUN_DAT - 60 days) AND >= (RUN_DAT - 90 days)",
+      "criteria": "ANY < (RUN_DAT - 60 days) AND >= (RUN_DAT - 90 days)",
       "title": "Asthma systemic steroid prescription code in month 3"
     },
     {
@@ -255,16 +255,16 @@
     {
       "id": 77,
       "name": "JND1RX_COD",
-      "details": "dm+d code when available",
+      "details": "39230211000001104",
       "criteria": "Earliest >30/11/2020 and <= RUN_DAT",
-      "title": "First Janssen vaccination medication code"
+      "title": "First Janssen vaccination medication code - may only be single vaccination"
     },
     {
       "id": 79,
       "name": "JND2RX_COD",
-      "details": "dm+d code when available",
+      "details": "39230211000001104",
       "criteria": "Latest > (jnD1RX_DAT + 20 days) and <= RUN_DAT",
-      "title": "Second Janssen vaccination medication code"
+      "title": "Second Janssen vaccination medication code - may only be single vaccination"
     },
     {
       "id": 81,
@@ -297,14 +297,14 @@
     {
       "id": 89,
       "name": "COVRX1_COD",
-      "details": "39115611000001103 OR 39114911000001105",
+      "details": "39115611000001103 OR 39114911000001105 OR 39230211000001104",
       "criteria": "Earliest >30/11/2020 and <= RUN_DAT",
       "title": "First COVID vaccination medication code (any)"
     },
     {
       "id": 91,
       "name": "COVRX2_COD",
-      "details": "39115611000001103 OR 39114911000001105",
+      "details": "39115611000001103 OR 39114911000001105 OR 39230211000001104",
       "criteria": "Latest > (COVRX1_DAT + 20 days) and <= RUN_DAT",
       "title": "Second COVID vaccination medication code (any)"
     },
@@ -514,14 +514,14 @@
     {
       "id": 151,
       "name": "COV1DECL_COD",
-      "details": "1324721000000108 OR 1324741000000101",
+      "details": "1324721000000108 OR 1324741000000101 OR 1324811000000107",
       "criteria": "Latest <= RUN_DAT",
       "title": "First COVID vaccination declined"
     },
     {
       "id": 153,
       "name": "COV2DECL_COD",
-      "details": "1324751000000103",
+      "details": "1324751000000103 OR 1324811000000107",
       "criteria": "Latest<= RUN_DAT",
       "title": "Second COVID vaccination declined"
     }
